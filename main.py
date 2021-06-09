@@ -7,6 +7,7 @@ app = FastAPI()
 deta = Deta(key)
 drive = deta.Drive("images")
 
+
 @app.get("/", response_class=HTMLResponse)
 def render():
     return """
@@ -16,12 +17,14 @@ def render():
     </form>
     """
 
+
 @app.post("/upload")
 def upload_img(file: UploadFile = File(...)):
     name = file.filename
     f = file.file
     res = drive.put(name, f)
     return res
+
 
 @app.get("/download/{name}")
 def download_img(name: str):
